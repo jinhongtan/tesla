@@ -19,7 +19,11 @@
       }
     ],
     "paths": {
-      "@/*": ["./*"]
+      "@/*": ["./*"],
+      "@db/*": ["./db/*"],
+      "@/db": ["./db/index.ts"],
+      "@components/*": ["./components/*"],
+      "@lib/*": ["./lib/*"],
     }
   },
   "include": [
