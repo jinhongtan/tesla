@@ -9,10 +9,7 @@ import { SkinProvider } from '@/context/SkinContext';
 
 const inter = Inter({ subsets: ['latin'] });
 
-export const metadata: Metadata = {
-  title: 'Tesla-Skin | Premium 3D Wraps for Your Tesla',
-  description: 'Browse and download premium 3D wraps and skins for all Tesla models',
-};
+
 
 export default function RootLayout({
   children,
