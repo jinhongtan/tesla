@@ -19,14 +19,6 @@ const nextConfig: NextConfig = {
   // ✅ Enable React Strict Mode
   reactStrictMode: true,
   
-  // ✅ Enable SWC minification
-  swcMinify: true,
-  
-  // ✅ Optional: Disable ESLint during build
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
-  
   // ✅ Optional: Disable TypeScript errors during build
   typescript: {
     ignoreBuildErrors: true,
