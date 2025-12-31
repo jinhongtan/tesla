@@ -24,3 +24,50 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* Add to app/globals.css */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+/* Custom scrollbar for better UX */
+.three-d-container {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+}
+
+.three-d-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.three-d-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.three-d-container::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.3);
+  border-radius: 3px;
+}
+
+/* Smooth transitions */
+.transition-3d {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Glow effects */
+.glow {
+  box-shadow: 0 0 40px rgba(59, 130, 246, 0.5);
+}
+
+.hover-glow:hover {
+  box-shadow: 0 0 60px rgba(59, 130, 246, 0.7);
+}

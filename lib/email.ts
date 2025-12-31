@@ -3,7 +3,13 @@ import { VerificationEmail } from "@/emails/verification-email";
 import { WelcomeEmail } from "@/emails/welcome-email";
 import { PasswordResetEmail } from "@/emails/password-reset-email";
 
-const resend = new Resend(process.env.RESEND_API_KEY!);
+const apiKey = process.env.RESEND_API_KEY;
+
+if (!apiKey) {
+  throw new Error('RESEND_API_KEY environment variable is not set');
+}
+
+const resend = new Resend(apiKey);
 
 export async function sendVerificationEmail({
   to,
@@ -75,7 +81,7 @@ export async function sendPasswordResetEmail({
       from: process.env.EMAIL_FROM || "Acme <onboarding@resend.dev>",
       to: [to],
       subject: `Reset your password for ${process.env.NEXT_PUBLIC_APP_NAME || "our app"}`,
-      react: PasswordResetEmail({ resetUrl, userEmail: to }),
+      react: PasswordResetEmail({ resetUrl:resetUrl, userEmail:to }),
     });
 
     if (error) {

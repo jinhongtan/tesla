@@ -1,7 +1,9 @@
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { db } from "@/db";
-import { sendVerificationEmail, sendWelcomeEmail } from "@/lib/email";
+import { sendVerificationEmail, sendWelcomeEmail,sendPasswordResetEmail } from "@/lib/email";
+import { Resend } from "resend";
+
 
 // Define types matching Better Auth's exact structure
 interface BetterAuthUser {
@@ -37,6 +39,12 @@ export const auth = betterAuth({
   emailAndPassword: {
     enabled: true,
     requireEmailVerification: true,
+    sendResetPassword: async (data: SendResetEmailData) => {
+      await sendPasswordResetEmail({
+        to: data.user.email,
+        resetUrl: data.url,
+      });
+    },
   },
   emailVerification: {
     enabled: true,
@@ -45,7 +53,7 @@ export const auth = betterAuth({
       await sendVerificationEmail({
         to: data.user.email,
         verificationUrl: data.url,
-        userEmail: data.user.email,
+        userEmail:data.user.email,
       });
     },
     sendWelcomeEmail: async (data: SendWelcomeEmailData) => {
@@ -69,16 +77,7 @@ export const auth = betterAuth({
     expiresIn: 60 * 60 * 24 * 7,
     updateAge: 60 * 60 * 24,
   },
-  resetPassword: {
-    enabled: true,
-    sendResetEmail: async (data: SendResetEmailData) => {
-      const { sendPasswordResetEmail } = await import("@/lib/email");
-      await sendPasswordResetEmail({
-        to: data.user.email,
-        resetUrl: data.url,
-      });
-    },
-  },
+
 });
 
 export type Session = typeof auth.$Infer.Session;

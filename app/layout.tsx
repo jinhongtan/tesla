@@ -1,13 +1,15 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "./globals.css";
-import { Header } from "@/components/layout/header";
+// app/layout.tsx
+import type { Metadata } from 'next';
+import { Inter } from 'next/font/google';
+import './globals.css';
+import { Header } from '@/components/layout/header';
+import { SkinProvider } from '@/context/SkinContext';
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: "NextAuth - Modern Authentication",
-  description: "Complete authentication solution with Next.js, Drizzle, and PostgreSQL",
+  title: 'Tesla-Skin | Premium 3D Wraps for Your Tesla',
+  description: 'Browse and download premium 3D wraps and skins for all Tesla models',
 };
 
 export default function RootLayout({
@@ -18,10 +20,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-          <div className="min-h-screen flex flex-col">
-            <Header />
-            <main className="flex-1">{children}</main>
-          </div>
+        <Header />
+        <SkinProvider>
+          {children}
+        </SkinProvider>
       </body>
     </html>
   );
