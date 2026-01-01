@@ -18,7 +18,7 @@ export default function SkinCard({ skin }: SkinCardProps) {
           {/* Thumbnail Image */}
           <div 
             className="w-full h-full bg-cover bg-center transition-transform duration-500 group-hover:scale-110"
-            style={{ backgroundImage: `url(${skin.thumbnailUrl})` }}
+            style={{ backgroundImage: `url(${skin.imageUrl})` }}
           />
           
           {/* Model Badge - Smaller */}
