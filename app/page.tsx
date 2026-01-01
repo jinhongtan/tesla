@@ -1,4 +1,5 @@
 // app/page.tsx
+"use client";
 
 import ModelSelector from '@/components/home/ModelSelector';
 import SearchBar from '@/components/home/SearchBar';

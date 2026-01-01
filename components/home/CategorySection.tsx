@@ -34,7 +34,6 @@ export default function CategorySection({ category }: CategorySectionProps) {
                         </p>
                     </div>
                 </div>
-                // components/home/CategorySection.tsx - Update the link
                 <Link
                     href={`/category/${category.id}`}
                     className="group flex items-center gap-1 text-blue-600 hover:text-blue-800 font-medium text-sm transition-colors"
@@ -44,7 +43,7 @@ export default function CategorySection({ category }: CategorySectionProps) {
                 </Link>
             </div>
 
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
                 {categorySkins.slice(0, 8).map((skin) => (
                     <SkinCard key={skin.id} skin={skin} />
                 ))}
@@ -52,7 +51,6 @@ export default function CategorySection({ category }: CategorySectionProps) {
 
             {categorySkins.length > 8 && (
                 <div className="mt-6 text-center">
-          // components/home/CategorySection.tsx - Update the link
                     <Link
                         href={`/category/${category.id}`}
                         className="group flex items-center gap-1 text-blue-600 hover:text-blue-800 font-medium text-sm transition-colors"
