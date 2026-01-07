@@ -1,20 +1,22 @@
 "use client";
 
+import React, { Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@components/ui/card";
 import { Button } from "@components/ui/button";
-import { Mail, Home, ArrowLeft, CheckCircle } from "lucide-react";
+import { Mail, ArrowLeft } from "lucide-react";
 
-export default function CheckEmailPage() {
+// This component handles the logic and UI
+function CheckEmailContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const email = searchParams.get("email") || "";
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-purple-50 py-10 px-4 sm:px-6 lg:px-8">
-      <div className="w-full max-w-4xl"> {/* Increased from max-w-lg to max-w-4xl */}
+      <div className="w-full max-w-4xl">
         <Card className="shadow-2xl overflow-hidden">
-          {/* Header - Wider */}
+          {/* Header */}
           <div className="bg-gradient-to-r from-blue-600 to-purple-600 p-10 text-white">
             <CardHeader className="p-0">
               <div className="flex items-center justify-center mb-8">
@@ -31,8 +33,8 @@ export default function CheckEmailPage() {
             </CardHeader>
           </div>
 
-          <CardContent className="p-10 space-y-10"> {/* Increased padding */}
-            {/* Email Display - Centered and larger */}
+          <CardContent className="p-10 space-y-10">
+            {/* Email Display */}
             <div className="text-center space-y-6">
               <div className="inline-flex items-center bg-blue-50 rounded-full px-8 py-4 border-2 border-blue-100">
                 <Mail className="h-6 w-6 text-blue-600 mr-3" />
@@ -45,10 +47,7 @@ export default function CheckEmailPage() {
               </p>
             </div>
 
-            {/* Help Section - Wider layout */}
-          
-
-            {/* Navigation Buttons - Wider */}
+            {/* Navigation Buttons */}
             <div className="space-y-6">
               <div className="flex flex-col lg:flex-row gap-4">
                 <Button
@@ -68,10 +67,9 @@ export default function CheckEmailPage() {
                   Already Verified? Sign In
                 </Button>
               </div>
-              
             </div>
 
-            {/* Quick Email Links - Wider */}
+            {/* Quick Email Links */}
             <div className="text-center pt-6 border-t">
               <p className="text-lg text-gray-700 mb-2">Need to check your email?</p>
               <div className="flex flex-wrap justify-center gap-4">
@@ -116,11 +114,24 @@ export default function CheckEmailPage() {
                   Proton Mail
                 </a>
               </div>
-           
             </div>
           </CardContent>
         </Card>
       </div>
     </div>
+  );
+}
+
+// This is the main page exported by Next.js
+export default function CheckEmailPage() {
+  return (
+    // The fallback can be a spinner or a simpler version of the card
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <p className="text-lg">Loading email verification status...</p>
+      </div>
+    }>
+      <CheckEmailContent />
+    </Suspense>
   );
 }

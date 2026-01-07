@@ -1,7 +1,6 @@
 "use client";
-//app/auth/reset-password/page.tsx
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react"; // Added Suspense
 import { useRouter, useSearchParams } from "next/navigation";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@components/ui/card";
 import { Button } from "@components/ui/button";
@@ -10,7 +9,8 @@ import { Alert, AlertDescription } from "@components/ui/alert";
 import { Lock, CheckCircle, Loader2, Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
 
-export default function ResetPasswordPage() {
+// 1. Move the core logic into a sub-component
+function ResetPasswordContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const token = searchParams.get("token");
@@ -22,7 +22,6 @@ export default function ResetPasswordPage() {
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [message, setMessage] = useState("");
 
-  // Check if token is present
   useEffect(() => {
     if (!token) {
       setStatus("error");
@@ -39,7 +38,6 @@ export default function ResetPasswordPage() {
       return;
     }
 
-    // Validate passwords
     if (!password || !confirmPassword) {
       setStatus("error");
       setMessage("Please enter and confirm your new password");
@@ -64,9 +62,7 @@ export default function ResetPasswordPage() {
     try {
       const response = await fetch("/api/auth/reset-password", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           token,
           newPassword: password,
@@ -82,7 +78,6 @@ export default function ResetPasswordPage() {
         setStatus("success");
         setMessage("Password reset successfully! You can now sign in with your new password.");
         
-        // Auto-redirect to login after 3 seconds
         setTimeout(() => {
           router.push("/auth/login");
         }, 3000);
@@ -94,6 +89,7 @@ export default function ResetPasswordPage() {
     }
   };
 
+  // If no token is provided, show the error UI
   if (!token) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-purple-50 p-4">
@@ -146,21 +142,14 @@ export default function ResetPasswordPage() {
                   {message}
                 </AlertDescription>
               </Alert>
-              
               <div className="bg-blue-50 rounded-lg p-4">
                 <p className="text-sm text-blue-800">
                   Redirecting to login page in 3 seconds...
                 </p>
               </div>
-
-              <div className="space-y-3">
-                <Button
-                  className="w-full"
-                  onClick={() => router.push("/auth/login")}
-                >
-                  Go to Login Now
-                </Button>
-              </div>
+              <Button className="w-full" onClick={() => router.push("/auth/login")}>
+                Go to Login Now
+              </Button>
             </div>
           ) : (
             <>
@@ -172,7 +161,7 @@ export default function ResetPasswordPage() {
 
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="space-y-2">
-                  <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+                  <label htmlFor="password" senior-className="block text-sm font-medium text-gray-700">
                     New Password
                   </label>
                   <div className="relative">
@@ -192,16 +181,10 @@ export default function ResetPasswordPage() {
                       className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
                       onClick={() => setShowPassword(!showPassword)}
                     >
-                      {showPassword ? (
-                        <EyeOff className="h-4 w-4" />
-                      ) : (
-                        <Eye className="h-4 w-4" />
-                      )}
+                      {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                     </button>
                   </div>
-                  <p className="text-xs text-gray-500">
-                    Must be at least 8 characters long
-                  </p>
+                  <p className="text-xs text-gray-500">Must be at least 8 characters long</p>
                 </div>
 
                 <div className="space-y-2">
@@ -225,11 +208,7 @@ export default function ResetPasswordPage() {
                       className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
                       onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                     >
-                      {showConfirmPassword ? (
-                        <EyeOff className="h-4 w-4" />
-                      ) : (
-                        <Eye className="h-4 w-4" />
-                      )}
+                      {showConfirmPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                     </button>
                   </div>
                 </div>
@@ -251,10 +230,7 @@ export default function ResetPasswordPage() {
               </form>
 
               <div className="text-center">
-                <Link
-                  href="/auth/login"
-                  className="text-sm text-blue-600 hover:text-blue-800"
-                >
+                <Link href="/auth/login" className="text-sm text-blue-600 hover:text-blue-800">
                   Back to Login
                 </Link>
               </div>
@@ -263,5 +239,18 @@ export default function ResetPasswordPage() {
         </CardContent>
       </Card>
     </div>
+  );
+}
+
+// 2. Wrap the component in Suspense for the default export
+export default function ResetPasswordPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-purple-50">
+        <Loader2 className="h-8 w-8 animate-spin text-blue-600" />
+      </div>
+    }>
+      <ResetPasswordContent />
+    </Suspense>
   );
 }

@@ -12,14 +12,14 @@ export default function HeroSection() {
         }} />
       </div>
       
-      <div className="container mx-auto px-4 py-20 relative z-10">
+      <div className="container mx-auto px-4 py-10 relative z-10">
         <div className="max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full mb-6">
             <Star className="h-4 w-4 text-yellow-400" />
             <span className="text-sm font-medium">Premium Tesla 3D Wraps & Skins</span>
           </div>
           
-          <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
+          <h1 className="text-5xl md:text-7xl font-bold leading-tight">
             Customize Your Tesla
             <span className="block bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
               With Stunning 3D Wraps
