@@ -1,5 +1,6 @@
-// app/page.tsx
 "use client";
+
+// app/page.tsx
 
 import ModelSelector from '@/components/home/ModelSelector';
 import SearchBar from '@/components/home/SearchBar';
@@ -16,16 +17,17 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+      
       <HeroSection />
 
       <main className="container mx-auto px-4 sm:px-6 py-6">
         {/* Results header */}
         <div className="mb-6 flex items-center justify-between">
           <div>
-            <h1 className="text-2xl font-bold text-gray-900">Tesla Skins & Wraps</h1>
+            <h1 className="text-2xl font-bold text-gray-900">Tesla Skins</h1>
             <p className="text-gray-600 mt-1 text-sm">
               {filteredSkins.length} {filteredSkins.length === 1 ? 'skin' : 'skins'} found
-              {hasActiveFilters && ' (with filters applied)'}
+              {/* {hasActiveFilters && ' (with filters applied)'} */}
             </p>
           </div>
           {hasActiveFilters && (
